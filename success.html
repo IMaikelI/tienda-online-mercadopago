@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Exitoso - TiendaOnline</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🛍️ TiendaOnline</h1>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="payment-status success">
+            <div class="status-icon">✅</div>
+            <h2>¡Pago Exitoso!</h2>
+            <p>Tu pedido ha sido procesado correctamente.</p>
+            <div class="status-details">
+                <p><strong>Estado:</strong> Pagado</p>
+                <p><strong>Referencia:</strong> <span id="reference"></span></p>
+                <p><strong>Monto:</strong> $<span id="amount"></span></p>
+            </div>
+            <p class="status-message">Te enviaremos un email de confirmación con los detalles de tu compra.</p>
+            <div class="status-actions">
+                <a href="index.html" class="btn btn-primary">Volver a la tienda</a>
+                <button onclick="descargarFactura()" class="btn btn-secondary">Descargar Comprobante</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TiendaOnline. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Obtener parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
+        const reference = params.get('reference') || 'N/A';
+        const amount = params.get('amount') || '0.00';
+
+        document.getElementById('reference').textContent = reference;
+        document.getElementById('amount').textContent = amount;
+
+        // Guardar estado en localStorage
+        const pedido = JSON.parse(localStorage.getItem('ultimaPedido')) || {};
+        pedido.estado = 'completado';
+        pedido.referencia = reference;
+        localStorage.setItem('ultimaPedido', JSON.stringify(pedido));
+
+        function descargarFactura() {
+            // Generar PDF simple con los datos del pedido
+            const doc = `
+FACTURA DE COMPRA
+================
+
+Referencia: ${reference}
+Fecha: ${new Date().toLocaleDateString('es-AR')}
+
+Datos del Cliente:
+Nombre: ${pedido.cliente?.nombre || 'N/A'}
+Email: ${pedido.cliente?.email || 'N/A'}
+Dirección: ${pedido.cliente?.direccion || 'N/A'}
+
+Productos:
+${pedido.items?.map(item => `- ${item.nombre} x${item.cantidad}: $${(item.precio * item.cantidad).toFixed(2)}`).join('\n') || 'N/A'}
+
+Subtotal: $${pedido.subtotal?.toFixed(2) || '0.00'}
+Envío: $${pedido.envio?.toFixed(2) || '0.00'}
+TOTAL: $${pedido.total?.toFixed(2) || '0.00'}
+
+¡Gracias por tu compra!`;
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(doc));
+            element.setAttribute('download', `factura-${reference}.txt`);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+    </script>
+</body>
+</html>
