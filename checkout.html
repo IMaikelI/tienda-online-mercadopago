@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - TiendaOnline</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🛍️ TiendaOnline</h1>
+            </div>
+            <a href="index.html" class="btn-back">← Volver</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="checkout-container">
+            <div class="checkout-form-section">
+                <h2>Completar Compra</h2>
+                
+                <form id="checkout-form" class="checkout-form">
+                    <!-- Datos Personales -->
+                    <fieldset>
+                        <legend>Datos Personales</legend>
+                        
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo *</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                            <span class="error" id="error-nombre"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico *</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="error" id="error-email"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono *</label>
+                            <input type="tel" id="telefono" name="telefono" required>
+                            <span class="error" id="error-telefono"></span>
+                        </div>
+                    </fieldset>
+
+                    <!-- Dirección de Envío -->
+                    <fieldset>
+                        <legend>Dirección de Envío</legend>
+                        
+                        <div class="form-group">
+                            <label for="direccion">Dirección *</label>
+                            <input type="text" id="direccion" name="direccion" required>
+                            <span class="error" id="error-direccion"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ciudad">Ciudad *</label>
+                                <input type="text" id="ciudad" name="ciudad" required>
+                                <span class="error" id="error-ciudad"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="provincia">Provincia *</label>
+                                <input type="text" id="provincia" name="provincia" required>
+                                <span class="error" id="error-provincia"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="codigo-postal">Código Postal *</label>
+                                <input type="text" id="codigo-postal" name="codigo-postal" required>
+                                <span class="error" id="error-codigo-postal"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Datos de Facturación -->
+                    <fieldset>
+                        <legend>Datos de Facturación</legend>
+                        
+                        <div class="form-group">
+                            <label for="documento">Documento de Identidad *</label>
+                            <input type="text" id="documento" name="documento" placeholder="DNI/Pasaporte" required>
+                            <span class="error" id="error-documento"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="factura-igual" name="factura-igual" checked>
+                                Usar la misma dirección para facturación
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <!-- Términos y Condiciones -->
+                    <fieldset>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="terminos" name="terminos" required>
+                                Acepto los términos y condiciones *
+                            </label>
+                            <span class="error" id="error-terminos"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="privacidad" name="privacidad" required>
+                                Acepto la política de privacidad *
+                            </label>
+                            <span class="error" id="error-privacidad"></span>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="checkout-summary-section">
+                <div class="order-summary">
+                    <h3>Resumen del Pedido</h3>
+                    <div id="summary-items" class="summary-items">
+                        <!-- Los items se cargarán aquí -->
+                    </div>
+                    <div class="summary-totals">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span>$<span id="subtotal">0.00</span></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Envío:</span>
+                            <span>$<span id="envio">0.00</span></span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span>$<span id="total-final">0.00</span></span>
+                        </div>
+                    </div>
+                    <button id="pagar-btn" class="btn btn-primary btn-full">Proceder al Pago</button>
+                    <p class="payment-info">Será redirigido a Mercado Pago para completar el pago</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TiendaOnline. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/carrito.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+</html>

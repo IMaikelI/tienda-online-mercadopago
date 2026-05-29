@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online - MercadoPago</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🛍️ TiendaOnline</h1>
+            </div>
+            <div class="navbar-menu">
+                <button id="carrito-btn" class="btn-carrito">
+                    🛒 Carrito (<span id="carrito-count">0</span>)
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h2>Bienvenido a nuestra tienda</h2>
+            <p>Los mejores productos a los mejores precios</p>
+        </section>
+
+        <section class="productos-section">
+            <h2>Nuestros Productos</h2>
+            <div id="productos-grid" class="productos-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal del Carrito -->
+    <div id="carrito-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tu Carrito</h2>
+            <div id="carrito-items" class="carrito-items">
+                <!-- Los items del carrito se cargarán aquí -->
+            </div>
+            <div class="carrito-total">
+                <h3>Total: $<span id="carrito-total">0.00</span></h3>
+            </div>
+            <button id="checkout-btn" class="btn btn-primary btn-full">Ir al Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 TiendaOnline. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
