@@ -1,6 +1,10 @@
 // Configuración de envío
 const COSTO_ENVIO = 9.99;
 
+// IMPORTANTE: URL de la Edge Function de Supabase
+// Cambia esto por tu URL real: https://<PROJECT_ID>.supabase.co/functions/v1/mercadopago-payment
+const SUPABASE_FUNCTION_URL = "https://acapurizimtptybtjcbe.supabase.co/functions/v1/mercadopago-payment";
+
 // Clase para manejar validaciones
 class ValidadorCheckout {
     constructor() {
@@ -222,8 +226,11 @@ async function procesarPago() {
             timestamp: new Date().toISOString()
         };
 
+        console.log('Enviando pedido a:', SUPABASE_FUNCTION_URL);
+        console.log('Datos del pedido:', pedido);
+
         // Llamar a la Edge Function de Supabase
-        const respuesta = await fetch('/api/mercadopago-payment', {
+        const respuesta = await fetch(SUPABASE_FUNCTION_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -231,7 +238,16 @@ async function procesarPago() {
             body: JSON.stringify(pedido)
         });
 
+        console.log('Respuesta status:', respuesta.status);
+        
+        if (!respuesta.ok) {
+            const errorText = await respuesta.text();
+            console.error('Error de la API:', respuesta.status, errorText);
+            throw new Error(`Error ${respuesta.status}: ${errorText}`);
+        }
+
         const resultado = await respuesta.json();
+        console.log('Resultado de la API:', resultado);
 
         if (resultado.success && resultado.redirectUrl) {
             // Guardar la orden antes de redirigir
@@ -242,7 +258,7 @@ async function procesarPago() {
             throw new Error(resultado.error || 'Error al procesar el pago');
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error completo:', error);
         mostrarNotificacion(`Error: ${error.message}`, 'danger');
         pagarBtn.disabled = false;
         pagarBtn.textContent = 'Proceder al Pago';
